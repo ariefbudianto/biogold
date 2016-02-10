@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<meta charset="utf-8">
+	</head>
+	<body> 
+		<h2>Hai, <?php echo e($name); ?> Terima kasih telah mendaftar di BioGold</h2>
+		<br />
+		Berikut ini adalah data yang Anda masukkan saat registrasi dan dipakai untuk login ke MEMBER AREA Biogold.
+		<table>
+			<tr><td>N a m a </td><td><?php echo e($name); ?></td></tr>
+			<tr><td>Email</td><td><?php echo e($email); ?></td></tr>
+		</table>
+		<div>Untuk mengaktifkan akun Anda, silahkan klik link berikut: <br>
+		<a target="_blank" href="<?php echo e(url('/register/aktivasi/'. $activationCode)); ?>"><?php echo e(url('/register/aktivasi/'. $activationCode)); ?></a>
+		</div>
+	</body>
+</html>

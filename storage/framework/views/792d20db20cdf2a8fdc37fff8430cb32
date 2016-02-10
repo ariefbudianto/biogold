@@ -1,0 +1,7 @@
+<?php $__env->startSection('content'); ?>
+<?php echo e("Message"); ?>
+
+<?php echo $msg; ?>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('theme01/layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

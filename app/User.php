@@ -16,6 +16,11 @@ class User extends Model implements AuthenticatableContract,
 {
     use Authenticatable, Authorizable, CanResetPassword;
     // Validation rules 
+    public static $rules = [
+            'first_name'    => 'required',
+            'email'         => 'required|email|unique:users,email,:id', 
+            'password'      => 'confirmed|required|min:5',
+        ];
     /**
      * The database table used by the model.
      *

@@ -21,54 +21,61 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function registerForm()
+    public function create()
     {
         return view('theme01/register');
     }
-    public function registerProccess(Request $request)
+    public function store(Request $request)
     {
-        $rules = array(
-            'first_name'    => 'required',
-            'email'         => 'required|email|unique:users,email,:id', 
-            'password'      => 'confirmed|required|min:5',
-        );
+        // $rules = array(
+        //     'first_name'    => 'required',
+        //     'email'         => 'required|email|unique:users,email,:id', 
+        //     'password'      => 'confirmed|required|min:5',
+        // );
         // MENERJEMAHKAN ERROR
         $messages = array(
             'required'  => 'Kolom ini harus diisi.',
-            'confirmed' => 'Password dan ulangi password tidak cocok',
-            'email'     => 'Email tidak valid',
+            'confirmed' => 'Password dan ulangi password tidak sama',
+            'email'     => 'Format email tidak valid',
             'unique'    => 'Email sudah terdaftar, tidak bisa digunakan kembali',
             'min'       => 'Minimal :min karakter'
         );
-        $validator     = Validator::make($request->all(), $rules, $messages);
+        $validator     = Validator::make($request->all(), User::$rules, $messages);
         if ($validator->fails())
         {
-            //echo $validator->messages();
-            return redirect('register')->withInput()->withErrors($validator->messages());
+            //echo $validator->messages();//menampilkan semua message error
+            return redirect('register')->withErrors($validator->messages())->withInput();
         } else {
-            echo 'berhasil';
+             // PROSES REGISTRASI USER
+            $user = Sentinel::register([
+                    'first_name'    => $request->first_name,
+                    'email'         => $request->email,
+                    'password'      => $request->password,
+            ]);
+            // PROSES MASUKAN USER KE DALAM ROLE
+            $user = Sentinel::findById($user->id);
+            $role = Sentinel::findRoleByName('Members');//dibuat dulu bila blm ada Role nya
+            $role->users()->attach($user);
+            $activation = Activation::create($user);
+            //$activation = Activation::exists($user);
+            $data = [
+             'name'          => $user->first_name,
+             'email'         => $user->email,
+             'activationCode'=> $activation->code
+            ];
+            //$data ini yang dipakai untuk mengganti token di template email
+            if (view()->exists('emails.auth.register')) {
+                $user = User::findOrFail($user->id);
+                Mail::send('emails.auth.register', $data, function ($m) use ($user) {
+                    $m->from('admin@cakning.loc', 'Biogold');
+                    $m->to($user->email, $user->first_name)->subject($user->first_name.', Aktivasi akun Biogold Anda');
+                });
+            }
+            $show_array = array(
+                'msg' => '<li>Registrasi sukses. <br />Silahkan cek email Anda, sebuah link aktifasi telah kami kirimkan.</li>'
+            );
+            return view('theme01/message',$show_array);
         }
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**

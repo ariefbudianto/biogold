@@ -3,9 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Routing\Controller as BaseController;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Validator;
+use Sentinel;
+use Mail;
+use Activation;
+use App\User;
 
 class UserController extends Controller
 {
@@ -17,6 +24,30 @@ class UserController extends Controller
     public function registerForm()
     {
         return view('theme01/register');
+    }
+    public function registerProccess(Request $request)
+    {
+        $rules = array(
+            'first_name'    => 'required',
+            'email'         => 'required|email|unique:users,email,:id', 
+            'password'      => 'confirmed|required|min:5',
+        );
+        // MENERJEMAHKAN ERROR
+        $messages = array(
+            'required'  => 'Kolom ini harus diisi.',
+            'confirmed' => 'Password dan ulangi password tidak cocok',
+            'email'     => 'Email tidak valid',
+            'unique'    => 'Email sudah terdaftar, tidak bisa digunakan kembali',
+            'min'       => 'Minimal :min karakter'
+        );
+        $validator     = Validator::make($request->all(), $rules, $messages);
+        if ($validator->fails())
+        {
+            //echo $validator->messages();
+            return redirect('register')->withInput()->withErrors($validator->messages());
+        } else {
+            echo 'berhasil';
+        }
     }
 
     /**

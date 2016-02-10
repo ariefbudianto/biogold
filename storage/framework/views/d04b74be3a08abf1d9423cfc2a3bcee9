@@ -1,0 +1,8 @@
+<?php $__env->startSection('content'); ?>
+<?php echo e("Start build your BioGold network"); ?>
+
+<?php echo $listproduk; ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('theme01/layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

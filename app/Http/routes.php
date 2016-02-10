@@ -17,3 +17,4 @@
 Route::get('/', 'HomeController@index');
 Route::get('/produk', ['as' => 'products', 'uses' => 'HomeController@produk']);
 Route::get('/register', ['as' => 'user.signup', 'uses' => 'UserController@registerForm']);
+Route::post('/registerProccess', ['as' => 'user.added', 'uses' => 'UserController@registerProccess']);

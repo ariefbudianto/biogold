@@ -8,19 +8,20 @@
 	@endforeach
 	</ul>
 @endif
-<form method="POST" action="{{url('registerproses')}}">
+<form method="POST" action="{{url('registerProccess')}}">
 	<input type="hidden" name="_token" value="{{ csrf_token() }}">
 	<div class="row">
 		<div class="col-md-6 col-sm-6 col-xs-12">	
 		<div class="input-group">
-		    <span class="input-group-addon"><span class="input-text">Email </span></span>
-		    <input type="text" name="email" class="form-control input-lg" placeholder="Email" value="">
+		    <span class="input-group-addon"><span class="input-text">Nama Lengkap </span></span>
+		    <input type="text" name="first_name" class="form-control input-lg" placeholder="Nama lengkap sesuai KTP">
 		</div><!-- End .input-group -->
 		<div style="clear:both;width:100%;height:20px;">
 
 		<div class="input-group">
-		    <span class="input-group-addon"><span class="input-text">Username </span></span>
-		    <input type="text" name="username" class="form-control input-lg" placeholder="Username">
+		    <span class="input-group-addon"><span class="input-text">Email </span></span>
+		    <input type="text" name="email" class="form-control input-lg" placeholder="Email" value="">
+		    {{$errors->first('email', '<div class="alert alert-danger"><b>:message</b></div>')}}
 		</div><!-- End .input-group -->
 		<div style="clear:both;width:100%;height:20px;">
 
@@ -32,7 +33,7 @@
 		
 		<div class="input-group">
 		    <span class="input-group-addon"><span class="input-text">Ulangi Password </span></span>
-		    <input type="password" name="password_confirm" class="form-control input-lg" placeholder="Konfirmasi password">
+		    <input type="password" name="password_confirmation" class="form-control input-lg" placeholder="Konfirmasi password">
 		</div><!-- End .input-group -->
 		<div style="clear:both;width:100%;height:20px;">
 

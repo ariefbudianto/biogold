@@ -18,3 +18,4 @@ Route::get('/', 'HomeController@index');
 Route::get('/produk', ['as' => 'products', 'uses' => 'HomeController@produk']);
 Route::get('/register', ['as' => 'user.signup', 'uses' => 'UserController@create']);
 Route::post('/registerProccess', ['as' => 'user.added', 'uses' => 'UserController@store']);
+Route::get('/aktifasi/{activationCode}/{id}', ['as' => 'user.activation', 'uses' => 'UserController@activate']);

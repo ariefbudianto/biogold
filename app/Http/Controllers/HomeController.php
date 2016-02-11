@@ -16,11 +16,14 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $generator = new App\Http\Libraries\Generators;
+        $Kode = $generator->generateCode(8);
+        $newUsername = $generator->autousername();
         $welcome = "<h1>Halo</h1>
         Selamat datang di webapp saya<br>
         Laravel, emang keren.";
         $show_array = array(
-            'teks1' => $welcome
+            'teks1' => $welcome. 'Kode '.$Kode. ' Username = '.$newUsername
         );
         return view('theme01/index',$show_array);
     }

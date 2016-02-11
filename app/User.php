@@ -16,11 +16,11 @@ class User extends Model implements AuthenticatableContract,
 {
     use Authenticatable, Authorizable, CanResetPassword;
     // Validation rules 
-    public static $rules = [
-            'first_name'    => 'required',
-            'email'         => 'required|email|unique:users,email,:id', 
-            'password'      => 'confirmed|required|min:5',
-        ];
+    // public static $rules = [
+    //         'first_name'    => 'required',
+    //         'email'         => 'required|email|unique:users,email,:id', 
+    //         'password'      => 'confirmed|required|min:5',
+    //     ];
     /**
      * The database table used by the model.
      *
@@ -33,7 +33,7 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['first_name', 'email', 'password'];
+    protected $fillable = ['first_name', 'username', 'email', 'password', 'handphone'];
 
     /**
      * The attributes excluded from the model's JSON form.

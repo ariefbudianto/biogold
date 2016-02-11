@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
-
+use App;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Validator;
@@ -27,30 +27,34 @@ class UserController extends Controller
     }
     public function store(Request $request)
     {
-        // $rules = array(
-        //     'first_name'    => 'required',
-        //     'email'         => 'required|email|unique:users,email,:id', 
-        //     'password'      => 'confirmed|required|min:5',
-        // );
+        $rules = array(
+             'first_name'    => 'required',
+             'email'         => 'required|email|unique:users,email,:id',
+             'handphone'     => 'required',
+        );
         // MENERJEMAHKAN ERROR
         $messages = array(
             'required'  => 'Kolom ini harus diisi.',
-            'confirmed' => 'Password dan ulangi password tidak sama',
             'email'     => 'Format email tidak valid',
-            'unique'    => 'Email sudah terdaftar, tidak bisa digunakan kembali',
-            'min'       => 'Minimal :min karakter'
+            'unique'    => 'Email sudah terdaftar, tidak bisa digunakan kembali'
         );
-        $validator     = Validator::make($request->all(), User::$rules, $messages);
+        $validator     = Validator::make($request->all(), $rules, $messages);
         if ($validator->fails())
         {
             //echo $validator->messages();//menampilkan semua message error
             return redirect('register')->withErrors($validator->messages())->withInput();
         } else {
-             // PROSES REGISTRASI USER
+             // PROSES REGISTRASI USER 
+            $generator = new App\Http\Libraries\Generators;         
+            $password = $generator->generateCode(8);
+            $newUsername = $generator->autousername();
+            $password = 'admin';
             $user = Sentinel::register([
                     'first_name'    => $request->first_name,
+                    'username'      => $newUsername,
                     'email'         => $request->email,
-                    'password'      => $request->password,
+                    'password'      => $password,
+                    'handphone'     => $request->handphone,
             ]);
             // PROSES MASUKAN USER KE DALAM ROLE
             $user = Sentinel::findById($user->id);
@@ -58,9 +62,17 @@ class UserController extends Controller
             $role->users()->attach($user);
             $activation = Activation::create($user);
             //$activation = Activation::exists($user);
+            //Username dan handphone dimasukkan manual, karena sentinel tidak bisa menerima parameter lain
+            $user->username  = $newUsername;
+            $user->handphone = $request->handphone;
+            $user->save();
             $data = [
+             'id'            => $user->id,
+             'username'      => $newUsername,
              'name'          => $user->first_name,
              'email'         => $user->email,
+             'password'      => $password,
+             'handphone'     => $user->handphone,
              'activationCode'=> $activation->code
             ];
             //$data ini yang dipakai untuk mengganti token di template email
@@ -77,7 +89,32 @@ class UserController extends Controller
             return view('theme01/message',$show_array);
         }
     }
+    public function activate($activationCode,$id)
+    {
+        $user = Sentinel::findById($id);
+        if (!empty($user))
+        {
+            if (Activation::complete($user, $activationCode))
+            {
+                // Activation was successfull
+                $message = '<li>Aktifasi berhasil</li>';
 
+            } elseif ($activation = Activation::completed($user))
+            {
+                // User has completed the activation process
+                $message = '<li>Aktifasi sudah dilakukan.</li>';
+            } else {
+                // Activation not found or not completed
+                $message = '<li>Aktifasi gagal.</li>';
+            }
+        } else {
+            $message = '<li>Member tidak dikenali.</li>';
+        }
+        $show_array = array(
+            'msg' => $message
+        );
+        return view('theme01/message',$show_array);
+    }
     /**
      * Display the specified resource.
      *

@@ -20,15 +20,9 @@
 		<div style="clear:both;width:100%;height:20px;">
 
 		<div class="input-group">
-		    <span class="input-group-addon"><span class="input-text">Password </span></span>
-		    <input type="password" name="password" class="form-control input-lg" placeholder="Password">
-		    {!!$errors->first('password', '<div class="alert alert-danger"><b>:message</b></div>')!!}
-		</div><!-- End .input-group -->
-		<div style="clear:both;width:100%;height:20px;">
-		
-		<div class="input-group">
-		    <span class="input-group-addon"><span class="input-text">Ulangi Password </span></span>
-		    <input type="password" name="password_confirmation" class="form-control input-lg" placeholder="Konfirmasi password">
+		    <span class="input-group-addon"><span class="input-text">Nomor Handphone </span></span>
+		    <input type="text" name="handphone" class="form-control input-lg" placeholder="Nomor handphone aktif">
+		    {!!$errors->first('handphone', '<div class="alert alert-danger"><b>:message</b></div>')!!}
 		</div><!-- End .input-group -->
 		<div style="clear:both;width:100%;height:20px;">
 

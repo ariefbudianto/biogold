@@ -48,7 +48,6 @@ class UserController extends Controller
             $generator = new App\Http\Libraries\Generators;         
             $password = $generator->generateCode(8);
             $newUsername = $generator->autousername();
-            $password = 'admin';
             $user = Sentinel::register([
                     'first_name'    => $request->first_name,
                     'username'      => $newUsername,

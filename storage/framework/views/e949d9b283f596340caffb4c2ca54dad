@@ -24,8 +24,6 @@
 		<div class="input-group">
 		    <span class="input-group-addon"><span class="input-text">Nomor Handphone </span></span>
 		    <input type="text" name="handphone" class="form-control input-lg" placeholder="Nomor handphone aktif">
-		    <input type="hidden" name="password" value="<?php echo e($password); ?>" />
-		    <input type="hidden" name="username" value="<?php echo e($username); ?>" /> 
 		    <?php echo $errors->first('handphone', '<div class="alert alert-danger"><b>:message</b></div>'); ?>
 
 		</div><!-- End .input-group -->

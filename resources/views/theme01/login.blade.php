@@ -2,6 +2,13 @@
 @section('content')
 <div class="col-md-6 col-sm-6 col-xs-12">	
 	<h2>{{"LOGIN"}}</h2>
+	@if (count($errors) > 0)
+		<ul>
+		@foreach ($errors->all() as $error)
+			<li>{{ $error }}</li>
+		@endforeach
+		</ul>
+	@endif
 	<form method="POST" action="{{url('loginCheck')}}">
 		<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 

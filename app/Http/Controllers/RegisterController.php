@@ -52,7 +52,7 @@ class RegisterController extends Controller
         if ($validator->fails())
         {
             //echo $validator->messages();//menampilkan semua message error
-            return redirect('register')->withErrors($validator->messages())->withInput();
+            return redirect()->route('user.signup')->withErrors($validator->messages())->withInput();
         } else {
              // PROSES REGISTRASI USER 
             $generator = new App\Http\Libraries\Generators;         
@@ -108,8 +108,7 @@ class RegisterController extends Controller
             if (Activation::complete($user, $activationCode))
             {
                 // Activation was successfull
-                $message = '<li>Aktifasi berhasil. Silahkan login ke MEMBER AREA dan lengkapi semua data profil '.$user->first_name.'.</li>';
-
+                return redirect('login')->withErrors('Aktifasi berhasil. Silahkan login ke MEMBER AREA dan lengkapi semua data profil '.$user->first_name.'.');
             } elseif ($activation = Activation::completed($user))
             {
                 // User has completed the activation process
@@ -126,49 +125,5 @@ class RegisterController extends Controller
             'msg' => $message
         );
         return view('theme01/message',$show_array);
-    }
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

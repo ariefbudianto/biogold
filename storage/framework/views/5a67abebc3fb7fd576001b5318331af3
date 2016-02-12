@@ -1,6 +1,13 @@
 <?php $__env->startSection('content'); ?>
 <div class="col-md-6 col-sm-6 col-xs-12">	
 	<h2><?php echo e("LOGIN"); ?></h2>
+	<?php if(count($errors) > 0): ?>
+		<ul>
+		<?php foreach($errors->all() as $error): ?>
+			<li><?php echo e($error); ?></li>
+		<?php endforeach; ?>
+		</ul>
+	<?php endif; ?>
 	<form method="POST" action="<?php echo e(url('loginCheck')); ?>">
 		<input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>" />
 

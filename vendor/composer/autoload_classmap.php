@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'AutousernameSeeder' => $baseDir . '/database/seeds/AutousernameSeeder.php',
+    'CreateSessionsTable' => $baseDir . '/database/migrations/2016_02_12_003433_create_sessions_table.php',
     'CreateTableAutousername' => $baseDir . '/database/migrations/2016_02_11_054134_create_table_autousername.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
     'File_Iterator' => $vendorDir . '/phpunit/php-file-iterator/src/Iterator.php',
@@ -478,6 +479,7 @@ return array(
     'PHP_Token_XOR_EQUAL' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_YIELD' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_YIELD_FROM' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
+    'ProductSeeder' => $baseDir . '/database/seeds/ProductSeeder.php',
     'Products' => $baseDir . '/database/migrations/2016_02_09_105005_products.php',
     'SebastianBergmann\\Comparator\\ArrayComparator' => $vendorDir . '/sebastian/comparator/src/ArrayComparator.php',
     'SebastianBergmann\\Comparator\\Comparator' => $vendorDir . '/sebastian/comparator/src/Comparator.php',

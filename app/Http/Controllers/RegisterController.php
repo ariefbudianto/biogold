@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;//untuk set get cookies
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use App;
@@ -14,8 +15,14 @@ use Mail;
 use Activation;
 use App\User;
 
-class UserController extends Controller
+class RegisterController extends Controller
 {
+    public function __construct(Request $request)
+    {
+        if ($request->session()->has('refUsername'))
+            $this->newSponsor = $request->session()->get('refUsername'); 
+        else $this->newSponsor = '';
+    }
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +30,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('theme01/register');
+        $show_array = array(
+            'sponsor'   => $this->newSponsor
+        );
+        return view('theme01/register', $show_array);
     }
     public function store(Request $request)
     {
@@ -83,6 +93,7 @@ class UserController extends Controller
                 });
             }
             $show_array = array(
+                'sponsor'    => $this->newSponsor,
                 'msg' => '<li>Registrasi sukses. <br />Silahkan cek email Anda, sebuah link aktifasi telah kami kirimkan.</li>'
             );
             return view('theme01/message',$show_array);
@@ -110,6 +121,7 @@ class UserController extends Controller
             $message = '<li>Member tidak dikenali.</li>';
         }
         $show_array = array(
+            'sponsor'    => $this->newSponsor,
             'msg' => $message
         );
         return view('theme01/message',$show_array);

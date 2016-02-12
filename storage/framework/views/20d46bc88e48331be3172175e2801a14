@@ -1,7 +1,7 @@
 <?php $__env->startSection('content'); ?>
 <?php echo e("Start build your BioGold network"); ?>
 
-<?php echo $teks1; ?>
+<?php echo $part1; ?>
 
 <?php $__env->stopSection(); ?>
 

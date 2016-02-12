@@ -21,9 +21,17 @@
 			</div>
 		</div>
 		<div class="container">
-			<div class="jumbotron">
-				<h1>BioGold</h1>
-				<?php echo $__env->yieldContent('content'); ?>
+			<div class="row">
+				<div class="col-md-12 col-sm-12 col-xs-12">	
+					<h1>BioGold</h1>
+					<?php echo $__env->yieldContent('content'); ?>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 col-sm-12 col-xs-12">	
+					<h4>FOOTER</h4>
+					<div>Diperkenalkan oleh <?php echo e($sponsor); ?></div>
+				</div>
 			</div>
 		</div> 
 	</body>

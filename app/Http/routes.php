@@ -16,7 +16,8 @@
 // });
 Route::get('/', 'HomeController@index')->middleware(['sponsor']);
 Route::get('/produk', ['as' => 'products', 'uses' => 'HomeController@produk']);
-Route::get('/register', ['as' => 'user.signup', 'uses' => 'RegisterController@create']);
+Route::get('/register', ['as' => 'user.signup', 'uses' => 'RegisterController@create'])->middleware(['sponsor']);
 Route::post('/registerProccess', ['as' => 'user.added', 'uses' => 'RegisterController@store']);
 Route::get('/aktifasi/{activationCode}/{id}', ['as' => 'user.activation', 'uses' => 'RegisterController@activate']);
 Route::get('/login', ['as' => 'user.login', 'uses' => 'LoginController@login']);
+Route::get('/loginCheck', ['as' => 'user.authorization', 'uses' => 'LoginController@loginAuth']);

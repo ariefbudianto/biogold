@@ -21,6 +21,7 @@ class InsertColumsToUsers extends Migration
             //$table->dropColumn('last_name');
             //menambah kolom2 baru
             $table->string('username',255)->after('id');
+            $table->string('username_upline',255)->after('username');
             $table->string('gender',1)->default('M')->after('last_name');//M=male, F=female
             $table->string('address1',64)->after('gender');
             $table->string('address2',64)->after('address1');      

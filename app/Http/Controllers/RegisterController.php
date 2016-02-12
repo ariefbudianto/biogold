@@ -6,13 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;//untuk set get cookies
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
-use App;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Validator;
 use Sentinel;
 use Mail;
 use Activation;
+use App;
 use App\User;
 
 class RegisterController extends Controller
@@ -20,8 +20,8 @@ class RegisterController extends Controller
     public function __construct(Request $request)
     {
         if ($request->session()->has('refUsername'))
-            $this->newSponsor = $request->session()->get('refUsername'); 
-        else $this->newSponsor = '';
+            $this->Upline = $request->session()->get('refUsername'); 
+        else $this->Upline = '';
     }
     /**
      * Display a listing of the resource.
@@ -31,7 +31,7 @@ class RegisterController extends Controller
     public function create()
     {
         $show_array = array(
-            'sponsor'   => $this->newSponsor
+            'sponsor'   => $this->Upline
         );
         return view('theme01/register', $show_array);
     }
@@ -73,6 +73,7 @@ class RegisterController extends Controller
             //$activation = Activation::exists($user);
             //Username dan handphone dimasukkan manual, karena sentinel tidak bisa menerima parameter lain
             $user->username  = $newUsername;
+            $user->username_upline  = $this->Upline;
             $user->handphone = $request->handphone;
             $user->save();
             $data = [
@@ -93,7 +94,7 @@ class RegisterController extends Controller
                 });
             }
             $show_array = array(
-                'sponsor'    => $this->newSponsor,
+                'sponsor'    => $this->Upline,
                 'msg' => '<li>Registrasi sukses. <br />Silahkan cek email Anda, sebuah link aktifasi telah kami kirimkan.</li>'
             );
             return view('theme01/message',$show_array);
@@ -107,7 +108,7 @@ class RegisterController extends Controller
             if (Activation::complete($user, $activationCode))
             {
                 // Activation was successfull
-                $message = '<li>Aktifasi berhasil</li>';
+                $message = '<li>Aktifasi berhasil. Silahkan login ke MEMBER AREA dan lengkapi semua data profil '.$user->first_name.'.</li>';
 
             } elseif ($activation = Activation::completed($user))
             {
@@ -121,7 +122,7 @@ class RegisterController extends Controller
             $message = '<li>Member tidak dikenali.</li>';
         }
         $show_array = array(
-            'sponsor'    => $this->newSponsor,
+            'sponsor'    => $this->Upline,
             'msg' => $message
         );
         return view('theme01/message',$show_array);

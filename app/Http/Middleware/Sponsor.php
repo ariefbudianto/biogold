@@ -3,7 +3,10 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Sentinel;
+use App;
 
 class Sponsor
 {
@@ -23,7 +26,13 @@ class Sponsor
         //Ada parameter
         if (!empty($refSponsor))
         { //parameter cookies session  = 1 0 0 = session ambil dari parameter, set cookies dan set session
-            $newSponsor = $refSponsor;//ganti dgn record User where username = $refSponsor
+            $user =  App\User::where('username', $refSponsor)->first();
+            if (null !== $user)
+            {
+                $newSponsor = $user->username;
+            } else {
+                $newSponsor = env('SPONSOR_DEFAULT');//ganti dgn record User where username = $refSponsor
+            }
             $request->session()->put('refUsername', $newSponsor);
             return $next($request)->withCookie('refCookiesUsername', $newSponsor, 129600);//3 bulan. karena dalam menit, 1 hari = 1440. 
         } elseif ( (empty($refSponsor)) && (empty($cookSponsor)) && (empty($sesSponsor)) )

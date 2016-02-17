@@ -16104,3 +16104,9 @@ Stack trace:
 #49 E:\xampp\htdocs\biogold\vendor\laravel\framework\src\Illuminate\Foundation\Http\Kernel.php(87): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter(Object(Illuminate\Http\Request))
 #50 E:\xampp\htdocs\biogold\public\index.php(54): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
 #51 {main}  
+[2016-02-17 03:34:48] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'syntax error, unexpected ')'' in E:\xampp\htdocs\biogold\storage\framework\views\e3dd357fbb3791d7c566c72037b305b8:63
+Stack trace:
+#0 {main}  
+[2016-02-17 03:35:25] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'syntax error, unexpected 'if' (T_IF)' in E:\xampp\htdocs\biogold\storage\framework\views\e3dd357fbb3791d7c566c72037b305b8:63
+Stack trace:
+#0 {main}  

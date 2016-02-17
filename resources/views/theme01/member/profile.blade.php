@@ -60,7 +60,7 @@
               <div class="form-group">
                 <label for="inputAddress1" class="col-lg-2 control-label">Alamat </label>
                 <div class="col-lg-10">
-                  <input type="text" name="address1" class="form-control" id="inputAddress1" placeholder="Alamat" value="{{ isset($name) ? $name : 'Default' }}{{ $user->address1 }}" />
+                  <input type="text" name="address1" class="form-control" id="inputAddress1" placeholder="Alamat" value="@if ($errors->first('address1')) : {{ $user->address1 }} @endif" />
                 </div>
               </div>
 

@@ -1,5 +1,6 @@
-@extends('theme01/layout')
+@extends('theme01.layout')
 @section('content')
-{{"Start build your BioGold network"}}
+<div class="jumbotron">
 {!!$listproduk!!}
+</div>
 @stop

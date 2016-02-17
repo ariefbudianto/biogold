@@ -50,10 +50,9 @@ return [
     | Please provide the user model used in Sentinel.
     |
     */
-
     'users' => [
 
-        'model' => 'Cartalyst\Sentinel\Users\EloquentUser',
+        'model' => 'App\User',
 
     ],
 

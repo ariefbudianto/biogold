@@ -52,18 +52,22 @@ class RegisterController extends Controller
         if ($validator->fails())
         {
             //echo $validator->messages();//menampilkan semua message error
+            $request->session()->flash('add_class_error', 'has-error');
             return redirect()->route('user.signup')->withErrors($validator->messages())->withInput();
         } else {
              // PROSES REGISTRASI USER 
             $generator = new App\Http\Libraries\Generators;         
             $password = $generator->generateCode(8);
+            $lasttwodigit = $generator->generateCode(2,true);
             $newUsername = $generator->autousername();
             $user = Sentinel::register([
                     'first_name'    => $request->first_name,
                     'username'      => $newUsername,
+                    'username_upline' => $this->Upline,
+                    'lasttwodigit'  => $lasttwodigit,
                     'email'         => $request->email,
                     'password'      => $password,
-                    'handphone'     => $request->handphone,
+                    'handphone'     => $request->handphone
             ]);
             // PROSES MASUKAN USER KE DALAM ROLE
             $user = Sentinel::findById($user->id);
@@ -71,11 +75,6 @@ class RegisterController extends Controller
             $role->users()->attach($user);
             $activation = Activation::create($user);
             //$activation = Activation::exists($user);
-            //Username dan handphone dimasukkan manual, karena sentinel tidak bisa menerima parameter lain
-            $user->username  = $newUsername;
-            $user->username_upline  = $this->Upline;
-            $user->handphone = $request->handphone;
-            $user->save();
             $data = [
              'id'            => $user->id,
              'username'      => $newUsername,
@@ -93,14 +92,14 @@ class RegisterController extends Controller
                     $m->to($user->email, $user->first_name)->subject($user->first_name.', Aktivasi akun Biogold Anda');
                 });
             }
+            $request->session()->flash('flash_message', '<li>Registrasi sukses. <br />Silahkan cek email Anda, sebuah link aktifasi telah kami kirimkan.</li>');
             $show_array = array(
-                'sponsor'    => $this->Upline,
-                'msg' => '<li>Registrasi sukses. <br />Silahkan cek email Anda, sebuah link aktifasi telah kami kirimkan.</li>'
+                'sponsor'    => $this->Upline
             );
             return view('theme01/message',$show_array);
         }
     }
-    public function activate($activationCode,$id)
+    public function activate($activationCode,$id,Request $request)
     {
         $user = Sentinel::findById($id);
         if (!empty($user))
@@ -112,17 +111,16 @@ class RegisterController extends Controller
             } elseif ($activation = Activation::completed($user))
             {
                 // User has completed the activation process
-                $message = '<li>Aktifasi sudah dilakukan.</li>';
+                $request->session()->flash('flash_message', '<li>Aktifasi sudah dilakukan.</li>');
             } else {
-                // Activation not found or not completed
-                $message = '<li>Aktifasi gagal.</li>';
+                // Activation not found or not completed                
+                $request->session()->flash('flash_message', '<li>Aktifasi gagal.</li>');
             }
         } else {
-            $message = '<li>Member tidak dikenali.</li>';
+            $request->session()->flash('flash_message', '<li>Member tidak dikenali.</li>');
         }
         $show_array = array(
-            'sponsor'    => $this->Upline,
-            'msg' => $message
+            'sponsor'    => $this->Upline
         );
         return view('theme01/message',$show_array);
     }

@@ -11,11 +11,8 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-Route::get('/', 'HomeController@index')->middleware(['sponsor']);
-Route::get('/produk', ['as' => 'products', 'uses' => 'HomeController@produk']);
+Route::get('/', ['as' => 'public.index', 'uses' => 'HomeController@index'])->middleware(['sponsor']);
+Route::get('/produk', ['as' => 'public.products', 'uses' => 'HomeController@produk']);
 Route::get('/register', ['as' => 'user.signup', 'uses' => 'RegisterController@create'])->middleware(['sponsor']);
 Route::post('/registerProccess', ['as' => 'user.added', 'uses' => 'RegisterController@store']);
 Route::get('/aktifasi/{activationCode}/{id}', ['as' => 'user.activation', 'uses' => 'RegisterController@activate']);
@@ -23,7 +20,9 @@ Route::get('/login', ['as' => 'user.login', 'uses' => 'LoginController@login'])-
 Route::get('/logout', ['as' => 'user.logout', 'uses' => 'LoginController@logout']);
 Route::post('/loginCheck', ['as' => 'user.authorization', 'uses' => 'LoginController@loginAuth']);
 
-Route::group(['prefix' => 'member','middleware' => 'auth.member'], function () {
-    Route::get('/profile', ['as' => 'user.profile', 'uses' => 'UserController@edit']);// Matches The "/member/profile" URL
+Route::group(['prefix' => 'member', 'as' => 'user.','middleware' => 'auth.member'], function () 
+{// Matches The "/member/profile" URL
+    Route::get('/profile', ['as' => 'profile', 'uses' => 'Member\UserController@edit']);// example call in blade:<a href="{{ route('user.profile') }}">Edit Account</a>
+    Route::post('/update', ['as' => 'update', 'uses' => 'Member\UserController@update']);
 });
 

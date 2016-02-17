@@ -53,8 +53,9 @@ class LoginController extends Controller
         );
         // MENERJEMAHKAN ERROR
         $messages = array(
-            'required'  => 'Kolom ini harus diisi.',
-            'email'     => 'Format email tidak valid'
+            'email.required'  => 'Kolom email harus diisi.',
+            'email'     => 'Format email tidak valid',
+            'password.required'  => 'Kolom password harus diisi.',
         );
         $validator     = Validator::make($request->all(), $rules, $messages);
         if ($validator->fails())
@@ -65,16 +66,23 @@ class LoginController extends Controller
                 'email'    => $request->email,
                 'password' => $request->password,
             ];
-            if ($auth = Sentinel::authenticate($credentials))
+            try 
             {
-                // User is logged in and assigned to the `$user` variable.
-                return redirect()->route('user.profile');
-            }
-            else
-            {
-                // User is not logged in
-                //$request->session()->flash('status', 'Task was successful!');
-                return redirect('login')->withInput()->withErrors('Email atau password salah.');
+                if ($auth = Sentinel::authenticate($credentials))
+                {
+                    // User is logged in and assigned to the `$user` variable.
+                    return redirect()->route('user.profile');
+                }
+                else
+                {
+                    // User is not logged in
+                    //$request->session()->flash('status', 'Task was successful!');
+                    return redirect('login')->withInput()->withErrors('Email atau password salah.');
+                }
+            } catch (\Cartalyst\Sentinel\Checkpoints\ThrottlingException $ex) {
+                return redirect('login')->withInput()->withErrors('Gagal login terlalu banyak. Akun Anda terkunci.');
+            } catch (\Cartalyst\Sentinel\Checkpoints\NotActivatedException $ex){
+                return redirect('login')->withInput()->withErrors('Akun Anda belum diaktifasi.');
             }
         }
     }

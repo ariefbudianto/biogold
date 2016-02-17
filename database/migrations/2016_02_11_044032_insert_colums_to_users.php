@@ -31,15 +31,14 @@ class InsertColumsToUsers extends Migration
             $table->string('handphone',16)->after('country');
             $table->text('bank')->after('handphone');
             $table->tinyInteger('lasttwodigit')->default('0')->after('bank');
-            $table->date('regdate')->after('lasttwodigit');//tgl register
-            $table->date('regpayment')->after('regdate');//tgl pembayaran registrasi
+            $table->datetime('regpaymentconfirm')->after('lasttwodigit');//tgl konfirmasi pembayaran
+            $table->datetime('regpayment')->after('regpaymentconfirm');//tgl pembayaran registrasi
             //jml transfer //Unsigned artinya tidak bisa menyimpan bilangan < 0 
             $table->integer('regamount')->unsigned()->after('regpayment');
             $table->text('regsender')->after('regamount');//informasi rekening sender
             $table->text('contactbox')->after('regsender');
             $table->boolean('subscribe')->default(true)->after('contactbox');
             $table->string('refip',12)->after('subscribe');
-            $table->string('refloc',32)->after('refip');
         });
     }
 

@@ -1,33 +1,54 @@
-@extends('theme01/layout')
+@extends('theme01.layout')
 @section('content')
-<div class="col-md-6 col-sm-6 col-xs-12">	
-	<h2>{{"LOGIN"}}</h2>
-	@if (count($errors) > 0)
-		<ul>
-		@foreach ($errors->all() as $error)
-			<li>{{ $error }}</li>
-		@endforeach
-		</ul>
-	@endif
-	<form method="POST" action="{{url('loginCheck')}}">
-		<input type="hidden" name="_token" value="{{ csrf_token() }}" />
+<div class="jumbotron">
+  <div class="row centered-form">
+    <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+        <h3 class="panel-title">Login</h3>
+        </div>
+        <div class="panel-body">
+          @if(Session::get('errors'))
+            <div class="alert alert-danger alert-dismissable">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+             @foreach($errors->all('<li>:message</li>') as $message)
+               {!! $message !!}
+              @endforeach
+            </div>
+          @endif
+            <form role="form" method="POST" action="{{url('loginCheck')}}">
+              <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+              <div class="form-group {!! Session::get('add_class_error') !!}">
+                <input type="email" name="email" class="form-control input-sm" placeholder="Email" value="{{ old('email') }}" >
+              </div>
 
-		<div class="input-group">
-		    <span class="input-group-addon"><span class="input-text">Email </span></span>
-		    <input type="text" name="email" class="form-control input-lg" placeholder="Email" value="{{ old('email') }}" />
-		    {!!$errors->first('email', '<div class="alert alert-danger"><b>:message</b></div>')!!}
-		</div><!-- End .input-group -->
-		<div style="clear:both;width:100%;height:20px;"></div>
-
-		<div class="input-group">
-		    <span class="input-group-addon"><span class="input-text">Password </span></span>
-		    <input type="password" name="password" class="form-control input-lg" placeholder="Password" />
-		    {!!$errors->first('password', '<div class="alert alert-danger"><b>:message</b></div>')!!}
-		</div><!-- End .input-group -->
-		<div style="clear:both;width:100%;height:20px;"></div>
-
-		<div class="sm-margin"></div><!-- space -->
-		<button type="submit" name="aksi" class="btn btn-primary btn-lg"> Login</button>
-	</form>
+              <div class="form-group {!! Session::get('add_class_error') !!}">
+                <input type="password" name="password" class="form-control input-sm" placeholder="Password" value="{{ old('password') }}">
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input name="remember" type="checkbox" value="Remember Me"> Remember Me
+                </label>
+                  <a href="/forgot" class="pull-right">Forgot Password?</a>
+              </div>
+              <button type="submit" name="aksi" class="btn btn-info btn-block"> Login</button>
+            </form>
+        </div><!--END div panel-body-->
+        <div class="text-center">
+        <a href="{{ URL::route('user.signup') }}" >Belum punya akun? Register</a>
+        </div>
+      </div><!--END div panel-default-->
+    </div><!--END div col-xs-12..-->
+  </div><!--END div centered-form-->
 </div>
 @stop
+<style>
+.centered-form{
+margin-top: 60px;
+}
+.centered-form .panel{
+background: rgba(255, 255, 255, 0.8);
+box-shadow: rgba(0, 0, 0, 0.3) 20px 20px 20px;
+color: #4e5d6c;
+}
+</style>

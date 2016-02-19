@@ -57,16 +57,18 @@
 					<div style="color:#FFF">BioGold :: MEMBER AREA</div>
 				</div>
 			</div>
-		</div> 
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+		</div>
+		@section('includejs')
+		@show
 	</body>
 	<style>
 	body{
 	  background: url("../images/stardust.png");
 	}
-	</style>
+	</style>	
 	<script type="text/javascript">
-		var url = window.location;
+	@section('javascript')
+        var url = window.location;
 		// Will only work if string in href matches with location
 		$('#menuBio ul.nav a[href="'+ url +'"]').parent().addClass('active');
 
@@ -74,5 +76,6 @@
 		$('#menuBio ul.nav a').filter(function() {
 		    return this.href == url;
 		}).parent().addClass('active');
+    @show		
 	</script>
 </html>

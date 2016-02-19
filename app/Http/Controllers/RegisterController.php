@@ -55,7 +55,7 @@ class RegisterController extends Controller
             $request->session()->flash('add_class_error', 'has-error');
             return redirect()->route('user.signup')->withErrors($validator->messages())->withInput();
         } else {
-             // PROSES REGISTRASI USER 
+            // PROSES REGISTRASI USER 
             $generator = new App\Http\Libraries\Generators;         
             $password = $generator->generateCode(8);
             $lasttwodigit = $generator->generateCode(2,true);

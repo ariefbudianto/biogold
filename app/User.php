@@ -30,5 +30,9 @@ class User extends CartalystUser {
         'subscribe',
         'refip'
     ];
+    protected $casts = [
+        'bank' => 'array',
+    ];
+    protected $loginNames = ['email', 'username'];
 
 }

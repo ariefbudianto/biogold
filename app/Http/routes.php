@@ -30,5 +30,7 @@ Route::group(['prefix' => 'member', 'as' => 'user.','middleware' => 'auth.member
     Route::post('/update', ['as' => 'update', 'uses' => 'Member\UserController@update']);
     Route::get('/changepassword', ['as' => 'changepassword', 'uses' => 'Member\UserController@changepassword']);
     Route::post('/dochangepassword', ['as' => 'dochangepassword', 'uses' => 'Member\UserController@dochangepassword']);
+    Route::get('/konfirmbayar', ['as' => 'confirmpayment', 'uses' => 'Member\RegistrasiController@index'])->middleware(['hasconfirmpayment']);
+    Route::post('/kirimkonfirmbayar', ['as' => 'doconfirmpayment', 'uses' => 'Member\RegistrasiController@store'])->middleware(['hasconfirmpayment']);
 });
 

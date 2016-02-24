@@ -14,10 +14,12 @@
       <div class="col-lg-6">
         <div class="well bs-component">
             <fieldset>
-              <legend>PROFILE</legend>
+              <legend>LINK PROMOSI</legend>
               <div class="form-group">
-                <label for="inputRekNo" class="col-lg-12 control-label">Link Afiliasi : <?php echo e(url('/').'/?ref='.$user->username); ?></label>
+                <label for="inputRekNo" class="col-lg-12"><?php echo e(url('/').'/?ref='.$user->username); ?></label>
               </div>
+
+              <legend>PROFILE</legend>
               <div class="form-group">
                 <label for="inputEmail" class="col-lg-2 control-label">Email</label>
                 <div class="col-lg-10">
@@ -91,12 +93,8 @@
                   <input type="text" name="country" class="form-control" id="inputCountry" placeholder="Negara" value="<?php echo e(old('country',$user->country)); ?>" />
                 </div>
               </div>
-            </fieldset>
-        </div>
-      </div>
-      <div class="col-lg-6">
-        <div class="well bs-component">
-            <fieldset>
+
+
               <legend>REKENING BANK</legend>
               <div class="form-group">
                 <label for="inputRekNo" class="col-lg-2 control-label">Nomor Rekening</label>
@@ -133,11 +131,47 @@
                 </div>
               </div>
 
+            </fieldset>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="well bs-component">
+            <fieldset>
+
               <legend>CONTACT BOX</legend>
               <div class="form-group">
                 <div class="col-lg-12">
                   <textarea name="contactbox" class="form-control" rows="3" id="contactbox" placeholder="Bila dikosongkan akan diisi default (nama, email dan nomor handphone Anda)."><?php echo e(old('contactbox',$user->contactbox)); ?></textarea>
                   <span class="help-block">Isi <em>contact box</em> ini akan muncul otomatis pada halaman website promosi sesuai parameter referral yang diberikan.</span>
+                </div>
+              </div>
+
+              <legend>REGISTRATION</legend>
+              <div class="form-group">
+                <label for="tglkonfirmasi" class="col-lg-2 control-label">Tgl Konfirmasi</label>
+                <div class="col-lg-10">
+                  <input type="text" class="form-control" id="tglkonfirmasi" value="<?php echo e($tglkonfirmasi); ?>" readonly="true" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="tgltransfer" class="col-lg-2 control-label">Tgl Transfer</label>
+                <div class="col-lg-10">
+                  <input type="text" class="form-control" id="tgltransfer" value="<?php echo e($tgltransfer); ?>" readonly="true" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="jmltransfer" class="col-lg-2 control-label">Jumlah Transfer</label>
+                <div class="col-lg-10">
+                  <input type="text" class="form-control" id="jmltransfer" value="<?php echo e($jmltransfer); ?>" readonly="true" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="tgllunas" class="col-lg-2 control-label">Tgl Lunas</label>
+                <div class="col-lg-10">
+                  <input type="text" class="form-control" id="tgllunas" value="<?php echo e($tgllunas); ?>" readonly="true" />
                 </div>
               </div>
               

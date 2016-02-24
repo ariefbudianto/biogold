@@ -82,6 +82,7 @@ return array(
     'Hamcrest\\Util' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Util.php',
     'Hamcrest\\Xml\\HasXPath' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Xml/HasXPath.php',
     'IlluminateQueueClosure' => $vendorDir . '/laravel/framework/src/Illuminate/Queue/IlluminateQueueClosure.php',
+    'InsertColRegpaidUsers' => $baseDir . '/database/migrations/2016_02_23_155940_insert_col_regpaid_users.php',
     'InsertColumsToUsers' => $baseDir . '/database/migrations/2016_02_11_044032_insert_colums_to_users.php',
     'MigrationCartalystSentinel' => $baseDir . '/database/migrations/2014_07_02_230147_migration_cartalyst_sentinel.php',
     'PHPUnit_Exception' => $vendorDir . '/phpunit/phpunit/src/Exception.php',

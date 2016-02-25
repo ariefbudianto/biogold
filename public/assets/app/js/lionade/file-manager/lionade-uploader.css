@@ -1,0 +1,214 @@
+.wp-file *{
+	margin: 0px;
+	padding: 0px;
+	color: #333;
+	font-size: 13px;
+	font-family: Arial;
+	line-height: 1.15;
+}
+.wp-file {
+	width: 100%;
+	top: 0px;
+	left: 0px;
+	z-index: 100000000000000000000;
+	height: 100%;
+	position: fixed;
+	display: none;
+	background-image: url(bg.png);
+}
+.wp-file li{
+	list-style-type:none;
+	display: block;
+}
+.wp-file .file {
+	width: 80%;
+	height: 80%;
+	overflow: hidden;
+	margin-top: 3%;
+	margin-left: auto;
+	margin-right: auto;
+	border: 2px solid #12131a;
+	border-radius: 0.2em 0.2em 0.2em 0.2em;
+	-moz-border-radius: 0.2em 0.2em 0.2em 0.2em;
+	-webkit-border-radius: 0.2em 0.2em 0.2em 0.2em;
+	background-color: #fff;
+}
+.wp-file .file-upload {
+	width: 100px;
+	text-align: center;
+    position: relative;
+    overflow: hidden;
+	border: 0px;
+	padding: 10px;
+	cursor: pointer;
+	margin-right: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 50px;
+	background-color: #12131a;
+	border-radius: 0.2em;
+	-moz-border-radius: 0.2em;
+	-webkit-border-radius: 0.2em;
+}
+.wp-file .file-upload:hover {
+	background-color: #678297;
+}
+.wp-file .file-upload span {
+	color: #fff;
+}
+.wp-file .file-upload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+.wp-file p {
+	color: #333;
+	text-align: center;
+	margin-top: 20px;
+}
+.wp-file .toolbar-menu {
+	width: 20%;
+	height: 100%;
+	float: left;
+	background-color: #12131a;
+}
+.wp-file .toolbar-menu ul li {
+	color: #ccc;
+	padding: 20px;
+}
+.wp-file .toolbar-menu .active {
+	color: #fff;
+	font-weight: bold;
+	background-color: #177bbb;
+}
+.wp-file .toolbar-menu .active:hover {
+	background-color: #177bbb;
+}
+.wp-file .toolbar-menu ul li:hover {
+	color: #fff;
+	cursor: pointer;
+	background-color: #12131a;
+}
+.wp-file .content {
+	width: 80%;
+	height: 100%;
+	float: left;
+	background-color: #f4f4f4;
+	border-left: 2px solid #f4f4f4;
+}
+.wp-file .content img {
+	cursor: pointer;
+	width: 107px;
+	margin-left: 10px;
+	margin-top: 10px;
+	border: 2px solid #f4f4f4;
+}
+.wp-file .content .active {
+	border: 2px dashed #333;	
+}
+.wp-file .content img:hover {
+	border: 2px solid #333;
+}
+.wp-file .wp-title {
+	width: 100%;
+	height: auto;
+	padding-left: 20px;
+	padding-top: 20px;
+	position: relative;
+}
+.wp-file .wp-title #title {
+	width: 90%;
+	display: block;
+	font-size: 20px;
+	float: left;
+}
+.wp-file .wp-title #close {
+	float: right;
+	width: 30px;
+	color: #fff;
+	position: absolute;
+	right: 0;
+	top:0;
+	padding: 4px 9px 6px 9px;
+	cursor: pointer;
+	display: block;
+	font-weight: bold;
+	font-size: 15px;
+	text-align: center;
+	-border-radius: 50%;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	background-color: #333;
+	border: 2px solid #333;
+}
+.wp-file .wp-title #close:hover {
+	background-color: #12131a;
+	border: 2px solid #12131a;
+}
+.wp-file .wp-images {
+	height: 400px;
+	overflow-y: auto;
+}
+
+.wp-images::-webkit-scrollbar {
+    width: 10px;
+}
+.wp-file .wp-images::-webkit-scrollbar-track {
+    background-color: #f4f4f4;
+}
+
+.wp-images::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #ccc;
+}
+
+.wp-uploader {
+	height: 490px;
+}
+.wp-file .wp-loading {
+	width: 40%;
+	height: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 10px;
+	margin-top: 200px;
+	display: none;
+	border: 1px solid #f4f4f4;
+	border-radius: 0.2em;
+	-moz-border-radius: 0.2em;
+	-webkit-border-radius: 0.2em;
+}
+.wp-file .wp-loading .fill {
+	width: 0px;
+	height: 10px;
+	background-color: #41637e;
+}
+.wp-file .wp-button {
+	height: 50px;
+	text-align: right;
+	border-top: 2px solid #f4f4f4;
+}
+.wp-file .wp-button button {
+	color: #fff;
+	border: 0px;
+	padding: 10px;
+	cursor: pointer;
+	margin-top: 6px;
+	margin-right: 25px;
+	background-color: #177bbb;
+	border-radius: 0.2em;
+	-moz-border-radius: 0.2em;
+	-webkit-border-radius: 0.2em;
+}
+.wp-file .wp-button button:hover {
+	background-color: #12131a;
+}
+.wp-file .hde {
+	display: none;
+}

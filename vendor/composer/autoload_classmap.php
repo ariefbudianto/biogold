@@ -6,9 +6,11 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddFieldBannedForTableUsers' => $baseDir . '/database/migrations/2016_02_19_074413_add_field_banned_for_table_users.php',
     'AutousernameSeeder' => $baseDir . '/database/seeds/AutousernameSeeder.php',
     'CreateSessionsTable' => $baseDir . '/database/migrations/2016_02_12_003433_create_sessions_table.php',
     'CreateTableAutousername' => $baseDir . '/database/migrations/2016_02_11_054134_create_table_autousername.php',
+    'CreateTableMenus' => $baseDir . '/database/migrations/2015_11_19_070507_create_table_menus.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
     'File_Iterator' => $vendorDir . '/phpunit/php-file-iterator/src/Iterator.php',
     'File_Iterator_Facade' => $vendorDir . '/phpunit/php-file-iterator/src/Facade.php',
@@ -83,6 +85,7 @@ return array(
     'Hamcrest\\Xml\\HasXPath' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Xml/HasXPath.php',
     'IlluminateQueueClosure' => $vendorDir . '/laravel/framework/src/Illuminate/Queue/IlluminateQueueClosure.php',
     'InsertColumsToUsers' => $baseDir . '/database/migrations/2016_02_11_044032_insert_colums_to_users.php',
+    'MenuSeed' => $baseDir . '/database/seeds/MenuSeed.php',
     'MigrationCartalystSentinel' => $baseDir . '/database/migrations/2014_07_02_230147_migration_cartalyst_sentinel.php',
     'PHPUnit_Exception' => $vendorDir . '/phpunit/phpunit/src/Exception.php',
     'PHPUnit_Extensions_GroupTestSuite' => $vendorDir . '/phpunit/phpunit/src/Extensions/GroupTestSuite.php',
@@ -481,6 +484,7 @@ return array(
     'PHP_Token_YIELD_FROM' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'ProductSeeder' => $baseDir . '/database/seeds/ProductSeeder.php',
     'Products' => $baseDir . '/database/migrations/2016_02_09_105005_products.php',
+    'RoleSeed' => $baseDir . '/database/seeds/RoleSeed.php',
     'SebastianBergmann\\Comparator\\ArrayComparator' => $vendorDir . '/sebastian/comparator/src/ArrayComparator.php',
     'SebastianBergmann\\Comparator\\Comparator' => $vendorDir . '/sebastian/comparator/src/Comparator.php',
     'SebastianBergmann\\Comparator\\ComparisonFailure' => $vendorDir . '/sebastian/comparator/src/ComparisonFailure.php',

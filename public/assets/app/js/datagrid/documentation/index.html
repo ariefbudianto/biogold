@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Lionade Datagrid Documentation</title>
+		<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+		<link href="assets/css/prism.css" rel="stylesheet">
+		<link href="assets/css/style.css" rel="stylesheet">
+		<script src="assets/js/jquery-2.1.1.min.js"></script>
+		<script src="assets/js/bootstrap.min.js"></script>
+		<script src="assets/js/prism.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$(window).scroll(function() {
+					if ($(window).scrollTop() > 0) {
+						$(".move-top").show();
+					} else {
+						$(".move-top").hide();
+					}
+				});
+
+				$('.move-top').click(function() {
+					movePage('.top');
+				});
+
+				$('li').each(function() {
+					$(this).on('click', function() {
+						var target = $(this).data("link");
+						movePage('#' + target);
+					});
+				});
+
+				function movePage(targetElement) {
+					$('html, body').animate({ 
+						scrollTop: $(targetElement).offset().top
+					}, 700);
+				}
+			});
+		</script>
+	</head>
+	<body>
+		<div class="col-md-3 sidebar">
+			<p class="logo">Lionade Datagrid</p>
+			<p class="subtitle">Lightweight and Flexible jQuery Datagrid Plugin</p>
+			<ul>
+				<li data-link="overview">Overview</li>
+				<li data-link="installation">Set Up</li>
+				<li data-link="get-started">Get Started</li>
+				<li data-link="settings">Settings</li>
+				<li data-link="methods">Methods</li>
+				<li data-link="contact">Contact The Author</li>
+			</ul>
+		</div>
+		<div class="col-md-12 top">
+			<div class="row">
+				<div class="col-md-3"></div>
+				<div class="col-md-9 content">
+<!-- ================================================================================================= -->
+					<h2 id="overview">Overview</h2>
+					<p>Lionade DataGrid is a jQuery plugin with minimal size, light weight, and also flexible. 
+					This plugin helps you to display data from server without thinking about the basic 
+					features of the DataGrid such as paging, sorting, searching or other basic features. 
+					In addition, this plugin comes with complex features that we usually encounter when 
+					trying to process the data in the DataGrid such as selecting the data en masse to edit 
+					or delete process, inline editing data, or displaying detail DataGrid. Equipped 
+					with a complete callback function and layout that is easy to customize. 
+					<!-- ================================================================================================= -->
+					<h2 id="installation">Set Up</h2>
+					<p>Quickly install and running Lionade Datagrid.</p>
+					<p class="title">INCLUDE JQUERY</p>
+					<p>First , download and include jQuery</p>
+<pre>
+	<code class="language-javascript">
+	&lt;script src="jquery.min.js"&gt;&lt;/script&gt;
+	</code>
+</pre>
+					<p class="title">INCLUDE THE DATAGRID PLUGIN</p>
+					<p>Then include the DataGrid plugin.</p>
+<pre>
+	<code class="language-javascript">
+	&lt;script src="lionade-datagrid.min.js"&gt;&lt;/script&gt;
+	</code>
+</pre>
+<p class="title">BOOTSTRAP</p>
+					<p>The third download bootstrap css file and include its for the basic look of the DataGrid.</p>
+<pre>
+	<code class="language-javascript">
+	&lt;link href="css/bootstrap.css" rel="stylesheet"&gt;
+	</code>
+</pre>
+	
+<!-- ================================================================================================= -->
+					<h2 id="get-started">Get Started</h2>
+					<p>After all of the assets that we need complete, we need to set up some HTML element for the DataGrid component. We deliberately separate from plugins that make it easier for you to change or customize the DataGrid layout according to the layout you want. For this example we have also set up the database instance and simple PHP code to retrieve data from the database. Please note the example below.</p>
+<p class="title">PHP FILE AND MYSQL DATABASE</p>
+<p>Simply import the <a href="../database/songs.sql">following</a> MYSQL database and prepare sample PHP file that we have provided on <strong>serverside</strong> folder.</p>
+<p class="title">HTML</p>
+<p>Here are examples of some HTML element that has been inserted with bootstrap class, please adjust the CSS class again if you use the others CSS frameworks such as foundation, materializecss or another CSS framework.</p>
+<pre>
+	<code class="language-javascript">
+	&lt;div class="container"&gt;
+		&lt;div class="col-md-12"&gt;
+			&lt;div class="col-md-12 text-right form-inline"&gt;
+				&lt;!--------------- Search Option ---------------&gt;
+				&lt;select class="form-control search-option"&gt;&lt;/select&gt;
+				&lt;!--------------- Search Input ---------------&gt;
+				&lt;input type="text" class="form-control search-input" placeholder="Search..."&gt;
+			&lt;/div&gt;
+			&lt;!--------------- Datagrid Table ---------------&gt;
+			&lt;table class="table table-bordered table-striped" id="datagrid"&gt;&lt;/table&gt;
+			&lt;div class="col-md-1"&gt;
+				&lt;!--------------- Items Perpage Option ---------------&gt;
+				&lt;select class="form-control option"&gt;&lt;/select&gt;
+			&lt;/div&gt;
+			&lt;div class="col-md-5"&gt;
+				&lt;!--------------- Pagination ---------------&gt;
+				&lt;ul class="pagination pagination-main"&gt;&lt;/ul&gt;
+			&lt;/div&gt;
+			&lt;div class="col-md-6 text-right"&gt;
+				&lt;!--------------- Active Page Info ---------------&gt;
+				&lt;span class="info"&gt;&lt;/span&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	</code>
+</pre>				
+<!-- ================================================================================================= -->
+<p class="title">JS</p>
+<p>Then run the DataGrid with the code below. Adjust the <strong>URL</strong> variable with PHP file path that had previously been set, also adjust selector for each HTML element and the columns to be shown.</p>
+<pre>
+	<code class="language-javascript">
+	var datagrid;
+
+	$(document).ready(function() {
+		datagrid = $("#datagrid").datagrid({
+			url						: 'albums.php', 
+			primaryField			: 'id', 
+			rowNumber				: true, 
+			searchInputElement 		: '.search-input',
+			searchFieldElement 		: '.search-option',
+			pagingElement 			: '.pagination-main',
+			optionPagingElement 	: '.option',
+			pageInfoElement 		: '.info',
+			columns					: [
+	        	{field: 'artists_name', title: 'Artist Name', sortable: true, width: 180, align: 'center', search: true},
+	        	{field: 'album_name', title: 'Album Name', sortable: true, width: 180, align: 'center', search: true},
+	        	{field: 'year', title: 'Year', sortable: true, width: 80, align: 'center', search: true}
+	        ]
+		});
+
+		datagrid.run();
+	});
+	</code>
+</pre>				
+<!-- ================================================================================================= -->
+					<h2 id="settings">Settings</h2>
+					<p>The following is a list and description of settings that you can adjust according to your needs.</p>
+					<table class="table table-striped m-b-none">
+						<thead>
+							<tr>
+								<th>Property</th>
+								<th>Description</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>                    
+								<td class="col-md-2">url</td>
+								<td class="col-md-8">Url is variable setting to determine the location of your serverside files. Lionade DataGrid uses JSON format for response data.</td>
+							</tr>
+							<tr>                    
+								<td class="col-md-2">primaryField</td>
+								<td class="col-md-8">PrimaryField serves as a reference for determining the main field value is used for some functions such as Sorting or when we activate the rowCheck property.</td>
+							</tr>
+							<tr>                    
+								<td class="col-md-2">sortBy</td>
+								<td class="col-md-8">SortBy serves to define the default reference field for sorting data.</td>
+							</tr>
+							<tr>                    
+								<td class="col-md-2">orderBy</td>
+								<td class="col-md-8">OrderBy function to determine the initial value is the reference for sorting data. The value can be <strong>desc</strong> or <strong>asc</strong>.</td>
+							</tr>
+							<tr>                    
+								<td class="col-md-2">pagingElement</td>
+								<td class="col-md-8">PagingElement is a selector for paging element, the structure used is follows the basic structure of the Bootstrap pagination.</td>
+							</tr>
+							<tr>                    
+								<td class="col-md-2">optionPagingElement</td>
+								<td class="col-md-8">OptionPagingElement is a selector for the select option element that determines the amount of data displayed on every page.</td>
+							</tr>
+							<tr>                    
+								<td class="col-md-2">searchFieldElement</td>
+								<td class="col-md-8">OptionPagingElement is a selector for the option element of every field that be used to filter data.</td>
+							</tr>
+							<tr>                    
+								<td class="col-md-2">searchInputElement</td>
+								<td class="col-md-8">SearchInputElement is a selector for the input element that be used to filter data.</td>
+							</tr>
+							<tr>                    
+								<td class="col-md-2">pageInfoElement</td>
+								<td class="col-md-8">PageInfoElement function to display information about the current page along with the amount of existing data.</td>
+							</tr>
+							<tr>                    
+								<td class="col-md-2">rowNumber</td>
+								<td class="col-md-8">RowNumber function is a function to display the serial number of each row.</td>
+							</tr>
+							<tr>                    
+								<td class="col-md-2">rowCheck</td>
+								<td class="col-md-8">RowCheck function is a function to display a checkbox on each row of data, of course we also have provide a method to retrieve selected data from the checkbox. The method will be described in the methods section.</td>
+							</tr>
+							<tr>                    
+								<td class="col-md-2">columns</td>
+								<td class="col-md-8">Columns are the property to perform settings on each field you want to display, columns also has several properties namely :<br><br>
+								<table class="table table-bordered m-b-none">
+									<thead>
+										<tr>
+											<th>Property</th>
+											<th>Description</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>field</td>
+											<td>Is the name of the field , based on data from the server</td>
+										</tr>
+										<tr>
+											<td>title</td>
+											<td>Is the name that appears on the header of each column</td>
+										</tr>
+										<tr>
+											<td>editable</td>
+											<td>Inline editable settings for each column</td>
+										</tr>
+										<tr>
+											<td>sortable</td>
+											<td>Sorting settings for each column</td>
+										</tr>
+										<tr>
+											<td>width</td>
+											<td>Width settings for each column</td>
+										</tr>
+										<tr>
+											<td>align</td>
+											<td>Text alignment setting for each column</td>
+										</tr>
+										<tr>
+											<td>search</td>
+											<td>The settings for each column whether it can appear on the search option</td>
+										</tr>
+										<tr>
+											<td>rowStyler</td>
+											<td>This setting serves to change the format of data you want to display, for example when we want to change the display of the data into a button or image according to the data from the server. This property contains a method that returns the index and the data for each row of data</td>
+										</tr>
+									</tbody>
+								</table>
+								Columns setting examples can be seen in the dialog <a href="javascript:;" data-toggle="modal" data-target="#modal1">bellow</a>.</td>
+							</tr>
+							<tr>                    
+								<td class="col-md-2">mergeCells</td>
+								<td class="col-md-8">MergeCells serves to combine two or more header columns into single columns. Every mergeCells setting have several properties namely : <br><br>
+								<table class="table table-bordered m-b-none">
+									<thead>
+										<tr>
+											<th>Property</th>
+											<th>Description</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>index</td>
+											<td>The first index of column will be merge</td>
+										</tr>
+										<tr>
+											<td>title</td>
+											<td>The title that appears for merged column</td>
+										</tr>
+										<tr>
+											<td>align</td>
+											<td>Text alignment setting for merged column</td>
+										</tr>
+										<tr>
+											<td>colspan</td>
+											<td>The amount columns will be merge, that start on the first index of column above</td>
+										</tr>
+									</tbody>
+								</table>
+								Merge Cells setting examples can be seen in the dialog <a href="javascript:;" data-toggle="modal" data-target="#modal0">bellow</a>.</td>
+							</tr>
+							<tr>                    
+								<td class="col-md-2">activePageNumber</td>
+								<td class="col-md-8">ActivePageNumber serves to define the active page number when the plugin is run.</td>
+							</tr>
+							<tr>                    
+								<td class="col-md-2">itemsPerPage</td>
+								<td class="col-md-8">ItemsPerPage serves to determine the amount of data displayed on every page.</td>
+							</tr>
+							<tr>                    
+								<td class="col-md-2">itemsPerPageOption</td>
+								<td class="col-md-8">ItemsPerPageOption serves to define the select option that can be change the amount of data displayed on every page.</td>
+							</tr>
+							<tr>                    
+								<td class="col-md-2">rowChecked</td>
+								<td class="col-md-8">RowChecked function is a function to determine the data that is selected by default, to use this feature you also need to activate the RowCheck feature.</td>
+							</tr>
+							<tr>                    
+								<td class="col-md-2">rowDetail</td>
+								<td class="col-md-8">RowDetail function is a function to display DataGrid details. This function allows you to display the detail data such as pictures or DataGrid detail for each row of data in the main DataGrid. This property contains 2 method that returns the index and data for each row of data, namely :  <br><br>
+								<table class="table table-bordered m-b-none">
+									<thead>
+										<tr>
+											<th>Property</th>
+											<th>Keterangan</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>formatter</td>
+											<td>This method is used to display the data or HTML elements that appear on the DataGrid detail</td>
+										</tr>
+										<tr>
+											<td>onExpandRow</td>
+											<td>This method will be executed every detail in the DataGrid when expanded or displayed</td>
+										</tr>
+									</tbody>
+								</table>
+								Examples of the use of this function can be seen in the dialog <a href="javascript:;" data-toggle="modal" data-target="#modal2">bellow</a>.</td>
+							</tr>
+						</tbody>
+					</table>
+<!-- ================================================================================================= -->
+<!-- ================================================================================================= -->
+					<h2 id="methods">Methods</h2>
+					<p>The following is a list and description of methods that you can use on lionade DataGrid.</p>
+					<table class="table table-striped m-b-none">
+						<thead>
+							<tr>
+								<th>Method</th>
+								<th>Keterangan</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>                    
+								<td class="col-md-2">datagrid.reload()</td>
+								<td class="col-md-8">This function serves to send new request data and refresh the DataGrid.</td>
+							</tr>
+							<tr>                    
+								<td class="col-md-2">datagrid.getChecked()</td>
+								<td class="col-md-8">This function will return an array of selected row data.</td>
+							</tr>
+							<tr>                    
+								<td class="col-md-2">datagrid.setChecked(array)</td>
+								<td class="col-md-8">This function serves to set each row you want to select based on a array parameter.</td>
+							</tr>
+							<tr>                    
+								<td class="col-md-2">datagrid.setUnchecked(array)</td>
+								<td class="col-md-8">This function serves to unset each row that has been selected based on a array parameter.</td>
+							</tr>
+							<tr>                    
+								<td class="col-md-2">datagrid.getRowData(rowIndex)</td>
+								<td class="col-md-8">This function serves to retrieve data objects based on index data provided on parameter.</td>
+							</tr>
+							<tr>                    
+								<td class="col-md-2">datagrid.editable(editableOptions)</td>
+								<td class="col-md-8">This function serves to activate the inline editable DataGrid feature. This function will have 5 properties, namely :<br><br>
+								<table class="table table-bordered m-b-none">
+									<thead>
+										<tr>
+											<th>Property</th>
+											<th>Keterangan</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>rowIndex</td>
+											<td>This property is used to determine the selected row in the editing mode</td>
+										</tr>
+										<tr>
+											<td>columnIndex</td>
+											<td>This property is used to determine the selected column in the editing mode</td>
+										</tr>
+										<tr>
+											<td>styler</td>
+											<td>This method serves to display the input element that is displayed on editing mode</td>
+										</tr>
+										<tr>
+											<td>onEdit</td>
+											<td>This method will be executed when a row activate the edit mode</td>
+										</tr>
+										<tr>
+											<td>onSave</td>
+											<td>This method will be executed when a row has finished running the edit mode, where the data will be edited directly updated to the DataGrid. You can also perform the function to post updated data to change the real data on server</td>
+										</tr>
+									</tbody>
+								</table>
+								Examples of the use for this function can be seen in the dialog <a href="javascript:;" data-toggle="modal" data-target="#modal3">bellow</a>.</td>
+							</tr>
+							<tr>                    
+								<td class="col-md-2">datagrid.queryParams(params)</td>
+								<td class="col-md-8">QueryParams function serves to add additional parameters that you may need to filter the data or other processes on the serverside. Examples of the use for this function you can see in the dialog <a href="javascript:;" data-toggle="modal" data-target="#modal4">bellow</a>.</td>
+							</tr>
+							<tr>                    
+								<td class="col-md-2">datagrid.run()</td>
+								<td class="col-md-8">This function is used to run the DataGrid in accordance with the property that we have set.</td>
+							</tr>
+						</tbody>
+					</table>
+<!-- ================================================================================================= -->
+					<h2 id="contact">Contact The Author</h2>
+					<p>Thank you for purchasing my jQuery datagrid plugin. If you have any questions that are beyond the scope of this help file, please feel free to email me at dev.muhammadrizki@gmail.com. Thanks so much!</p>
+					<p>Created at 1 Frebuari 2016, by Muhammad Rizki A</p>
+<!-- ================================================================================================= -->
+				</div>
+			</div>
+		</div>
+		<div class="move-top">
+			<i class="glyphicon glyphicon-chevron-up"></i>
+		</div>
+		<div id="modal0" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Merge Cells Settings</h4>
+					</div>
+					<div class="modal-body">
+						<pre>
+							<code class="language-javascript">
+mergeCells	: [
+	{index: 2, title: 'First Column Merge', align: 'center', colspan: 2},
+	{index: 4, title: 'Second Column Merge', align: 'center', colspan: 2}
+]
+							</code>
+						</pre>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="modal1" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Columns Settings</h4>
+					</div>
+					<div class="modal-body">
+						<pre>
+							<code class="language-javascript">
+columns	: [
+	{field: 'artists_name', title: 'Artist Name', sortable: true, width: 180, align: 'center', search: true},
+	{field: 'album_name', title: 'Album Name', sortable: true, width: 180, align: 'center', search: true},
+	{field: 'year', title: 'Year', sortable: true, width: 80, align: 'center', search: true},
+	{field: 'menu', title: 'Update', sortable: false, width: 80, align: 'center', search: false, 
+		rowStyler: function(rowData, rowIndex) {
+			return '&lt;button class="btn btn-primary" onclick="editable(' + rowIndex + ')" style="margin-bottom: 10px;"&gt;' + rowIndex + '&lt;/button&gt;';
+		}
+	}
+]
+							</code>
+						</pre>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="modal2" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Datagrid Detail Settings</h4>
+					</div>
+					<div class="modal-body">
+						<pre>
+							<code class="language-javascript">
+rowDetail				: {
+	formatter : function(rowData, rowIndex) {
+		return '&lt;p&gt;This is row detail&lt;/p&gt;';
+	},
+	onExpandRow : function(rowData, rowIndex) {
+		console.log('Row Expanded!');
+	}
+}
+							</code>
+						</pre>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="modal3" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Editable Settings</h4>
+					</div>
+					<div class="modal-body">
+						<pre>
+							<code class="language-javascript">
+function editable(rowIndex) {
+	datagrid.editable({
+		rowIndex 	: rowIndex,
+		columnIndex : 'all',
+		styler 		: function(field_name, value) {
+			return "&lt;input type='text' class='form-control' name='" + field_name + "' value='" + value + "'&gt;";
+		},
+		onEdit 		: function() {
+			console.log("Edited");
+		},
+		onSave 		: function() {
+			console.log(datagrid.getRowData(rowIndex));
+		}
+	});
+}
+							</code>
+						</pre>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="modal4" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Query Params Settings</h4>
+					</div>
+					<div class="modal-body">
+						<pre>
+							<code class="language-javascript">
+datagrid.queryParams({first_date : '02-06-1995', last_date : '02-10-1995'});
+datagrid.reload();
+							</code>
+						</pre>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

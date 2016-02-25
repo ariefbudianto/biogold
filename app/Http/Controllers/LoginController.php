@@ -66,9 +66,10 @@ class LoginController extends Controller
                 'email'    => $request->email,
                 'password' => $request->password,
             ];
+            $remember = isset($request->remember) && $request->remember == '1' ? true : false;
             try 
             {
-                if ($auth = Sentinel::authenticate($credentials))
+                if ($auth = Sentinel::authenticate($credentials,$remember))
                 {
                     // User is logged in and assigned to the `$user` variable.
                     return redirect()->route('user.profile');

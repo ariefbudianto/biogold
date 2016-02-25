@@ -32,5 +32,6 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'sponsor' => \App\Http\Middleware\Sponsor::class,
         'auth.member' => \App\Http\Middleware\UserAuth::class,
+        'hasconfirmpayment' => \App\Http\Middleware\HasConfirmPayment::class,
     ];
 }

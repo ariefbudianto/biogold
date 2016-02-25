@@ -21,22 +21,14 @@
 			    <div style="height: 1px;" aria-expanded="false" class="navbar-collapse collapse" id="menuBio">
 			      <ul class="nav navbar-nav">
 			        <li><a href="{{ URL::route('user.profile') }}">Profile <span class="sr-only">(current)</span></a></li>
+			        <li><a href="{{ URL::route('user.confirmpayment') }}">Konfirmasi Pembayaran</a></li>
 			        <li class="dropdown">
-			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">FAQ <span class="caret"></span></a>
+			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Data <span class="caret"></span></a>
 			          <ul class="dropdown-menu" role="menu">
-			            <li><a href="#">Cara Pendaftaran</a></li>
-			            <li class="divider"></li>
-			            <li><a href="#">Pembayaran</a></li>
-			            <li><a href="#">Legalitas</a></li>
+			            <li><a href="{{ URL::route('user.referral') }}">Referral</a></li>
 			          </ul>
 			        </li>
 			      </ul>
-			      <form class="navbar-form navbar-left" role="search">
-			        <div class="form-group">
-			          <input vk_1b39c="subscribed" class="form-control" placeholder="Cari produk" type="text">
-			        </div>
-			        <button type="submit" class="btn btn-default">GO</button>
-			      </form>
 			      <ul class="nav navbar-nav navbar-right">
 			        <li><a href="{{ URL::route('user.logout') }}">LOGOUT</a></li>
 			      </ul>
@@ -57,16 +49,18 @@
 					<div style="color:#FFF">BioGold :: MEMBER AREA</div>
 				</div>
 			</div>
-		</div> 
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+		</div>
+		@section('includejs')
+		@show
 	</body>
 	<style>
 	body{
 	  background: url("../images/stardust.png");
 	}
-	</style>
+	</style>	
 	<script type="text/javascript">
-		var url = window.location;
+	@section('javascript')
+        var url = window.location;
 		// Will only work if string in href matches with location
 		$('#menuBio ul.nav a[href="'+ url +'"]').parent().addClass('active');
 
@@ -74,5 +68,6 @@
 		$('#menuBio ul.nav a').filter(function() {
 		    return this.href == url;
 		}).parent().addClass('active');
+    @show		
 	</script>
 </html>

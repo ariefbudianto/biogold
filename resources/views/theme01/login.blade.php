@@ -16,7 +16,7 @@
               @endforeach
             </div>
           @endif
-            <form role="form" method="POST" action="{{url('loginCheck')}}">
+            <form role="form" method="POST" action="{{ route('user.authorization') }}">
               <input type="hidden" name="_token" value="{{ csrf_token() }}" />
               <div class="form-group {!! Session::get('add_class_error') !!}">
                 <input type="email" name="email" class="form-control input-sm" placeholder="Email" value="{{ old('email') }}" >
@@ -27,15 +27,15 @@
               </div>
               <div class="checkbox">
                 <label>
-                  <input name="remember" type="checkbox" value="Remember Me"> Remember Me
+                  <input name="remember" type="checkbox" value="1"> Remember Me
                 </label>
-                  <a href="/forgot" class="pull-right">Forgot Password?</a>
+                  <a href="{{ route('user.passwordreset') }}" class="pull-right">Lupa Password?</a>
               </div>
               <button type="submit" name="aksi" class="btn btn-info btn-block"> Login</button>
             </form>
         </div><!--END div panel-body-->
         <div class="text-center">
-        <a href="{{ URL::route('user.signup') }}" >Belum punya akun? Register</a>
+        <a href="{{ route('user.signup') }}" >Belum punya akun? Register</a>
         </div>
       </div><!--END div panel-default-->
     </div><!--END div col-xs-12..-->

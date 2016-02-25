@@ -17,7 +17,7 @@ class UserAuth
      */
     public function handle($request, Closure $next)
     {
-        if (($user = Sentinel::check()))
+        if ((Sentinel::check()) && (Sentinel::inRole('members')))
         {
             return $next($request);
         } else {

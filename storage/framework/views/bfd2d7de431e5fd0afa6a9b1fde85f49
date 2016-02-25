@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<meta charset="utf-8">
+	</head>
+	<body> 
+		Hai <?php echo e($name); ?>,
+		<br /><br />
+		Ada permintaan reset password dari <?php echo e($name); ?>.<br />
+		<p>Silahkan klik link berikut untuk memasukkan password baru:<br />
+		<a target="_blank" href="<?php echo e(route('user.passwordnew',['id' => $id, 'code' => $code])); ?>"><?php echo e(route('user.passwordnew',['id' => $id, 'code' => $code])); ?></a>
+		</p>
+		<p>Abaikan email ini bila <?php echo e($name); ?> tidak merasa melakukan permintaan reset password.
+	</body>
+</html>

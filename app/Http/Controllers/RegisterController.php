@@ -55,7 +55,7 @@ class RegisterController extends Controller
             $request->session()->flash('add_class_error', 'has-error');
             return redirect()->route('user.signup')->withErrors($validator->messages())->withInput();
         } else {
-             // PROSES REGISTRASI USER 
+            // PROSES REGISTRASI USER 
             $generator = new App\Http\Libraries\Generators;         
             $password = $generator->generateCode(8);
             $lasttwodigit = $generator->generateCode(2,true);
@@ -75,7 +75,10 @@ class RegisterController extends Controller
             $role->users()->attach($user);
             $activation = Activation::create($user);
             //$activation = Activation::exists($user);
+            //$data ini yang dipakai untuk mengganti token di template email
             $data = [
+            'from_email'        => env('MAIL_USERNAME'),
+            'from_name'         => env('APP_NAME'),
              'id'            => $user->id,
              'username'      => $newUsername,
              'name'          => $user->first_name,
@@ -84,12 +87,11 @@ class RegisterController extends Controller
              'handphone'     => $user->handphone,
              'activationCode'=> $activation->code
             ];
-            //$data ini yang dipakai untuk mengganti token di template email
             if (view()->exists('emails.auth.register')) {
                 $user = User::findOrFail($user->id);
                 Mail::send('emails.auth.register', $data, function ($m) use ($user) {
-                    $m->from('admin@cakning.loc', 'Biogold');
-                    $m->to($user->email, $user->first_name)->subject($user->first_name.', Aktivasi akun Biogold Anda');
+                    $m->from($data['from_email'], $data['from_name']);
+                    $m->to($user->email, $user->first_name)->subject($user->first_name.', Aktivasi akun '.$data['from_name'].' Anda');
                 });
             }
             $request->session()->flash('flash_message', '<li>Registrasi sukses. <br />Silahkan cek email Anda, sebuah link aktifasi telah kami kirimkan.</li>');

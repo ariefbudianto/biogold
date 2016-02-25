@@ -32,5 +32,7 @@ Route::group(['prefix' => 'member', 'as' => 'user.','middleware' => 'auth.member
     Route::post('/dochangepassword', ['as' => 'dochangepassword', 'uses' => 'Member\UserController@dochangepassword']);
     Route::get('/konfirmbayar', ['as' => 'confirmpayment', 'uses' => 'Member\RegistrasiController@index'])->middleware(['hasconfirmpayment']);
     Route::post('/kirimkonfirmbayar', ['as' => 'doconfirmpayment', 'uses' => 'Member\RegistrasiController@store'])->middleware(['hasconfirmpayment']);
+    Route::get('/referral', ['as' => 'referral', 'uses' => 'Member\ReferralController@index']);
+    Route::get('/referralData', ['as' => 'referralData', 'uses' => 'Member\ReferralController@getData']);
 });
 
